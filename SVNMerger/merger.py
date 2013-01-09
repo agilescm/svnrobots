@@ -80,7 +80,11 @@ class SVNMerger(object):
 		ret = False
 
 		if self.go:
-			cmdsvn = 'svn co ' + self.dest + ' temp/' + self.workspace
+			cmdsvn = 'svn co ' + \
+			" --username " + self.username + \
+			" --password " + self.passwd + \
+			" " + self.dest + ' temp/' + self.workspace
+			
 			outsvn = self.runCommand(cmdsvn)
 			if debug:
 				print(outsvn)
@@ -127,7 +131,11 @@ class SVNMerger(object):
 
 		if self.go:
 			if os.path.exists('temp/' + self.workspace):
-				cmdsvn = 'svn merge --accept postpone ' + self.source + ' temp/' + self.workspace
+				cmdsvn = 'svn merge --accept postpone ' + \
+				" --username " + self.username + \
+				" --password " + self.passwd + \
+				" " + self.source + " temp/" + self.workspace
+
 				outsvn = self.runCommand(cmdsvn)
 
 				if debug:
@@ -180,7 +188,10 @@ class SVNMerger(object):
 			if os.path.exists('temp/' + self.workspace):
 				revisions = self.getMergeRevisions()
 				cmdsvn = "svn ci -m 'automerge: merged revisions " + revisions + \
-				" from " + self.dest + "' temp/" + self.workspace
+				" from " + self.dest + "'" + \
+				" --username " + self.username + \
+				" --password " + self.passwd + \
+				" temp/" + self.workspace
 				outsvn = self.runCommand(cmdsvn)
 
 				if debug:
